@@ -26,6 +26,11 @@ import com.dongeul.composesample.ui.theme.ComposeSampleTheme
 
 @Composable
 fun Greeting(name: String) {
+    val expanded = remember {
+        mutableStateOf(value = false)
+    }
+
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(horizontal = 9.dp, vertical = 9.dp)
@@ -34,6 +39,7 @@ fun Greeting(name: String) {
             Column(
                 Modifier
                     .weight(1f)
+                    .padding(bottom = extraPadding)
             ) {
                 Text(
                     text = "Hello"
@@ -42,8 +48,12 @@ fun Greeting(name: String) {
                     text = name
                 )
             }
-            OutlinedButton(onClick = { /*TODO*/ }, modifier = Modifier.weight(1f)) {
-                Text(text = "show More")
+
+            OutlinedButton(
+                onClick = { expanded.value = !expanded.value },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(text = if (expanded.value) "Show Less" else "Show More")
             }
         }
     }
