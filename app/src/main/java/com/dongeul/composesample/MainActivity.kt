@@ -4,6 +4,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
@@ -30,11 +31,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme() {
-                Conversation(messages = SampleData.conversationSample)
+                Column() {
+                    MyApp(names = listOf("개신기하네이거","니니니니니니"))
+                }
+
             }
         }
     }
 }
+
+
 
 @Composable
 fun MessageCard(msg: Message) {
@@ -50,7 +56,7 @@ fun MessageCard(msg: Message) {
         Spacer(modifier = Modifier.width(8.dp))
 
         var isExpanded by remember {
-            mutableStateOf(false)
+            mutableStateOf(true)
         }
 
         val surfaceColor by animateColorAsState(
@@ -70,14 +76,20 @@ fun MessageCard(msg: Message) {
                 shape = MaterialTheme.shapes.medium,
                 elevation = 1.dp,
                 color = surfaceColor,
-                modifier = Modifier.animateContentSize().padding(1.dp)
+                modifier = Modifier
+                    .animateContentSize()
+                    .padding(1.dp)
             ) {
-                Text(
-                    text = msg.body,
-                    modifier = Modifier.padding(all = 4.dp),
-                    maxLines = if (isExpanded) Int.MAX_VALUE else 1,
-                    style = MaterialTheme.typography.body2
-                )
+
+                AnimatedVisibility(visible = isExpanded) {
+                    Text(
+                        text = msg.body,
+                        modifier = Modifier.fillMaxSize(),
+                        maxLines = if (isExpanded) Int.MAX_VALUE else 1,
+                        style = MaterialTheme.typography.body2
+                    )
+                }
+
             }
 
         }
@@ -116,6 +128,7 @@ fun PreviewConversation() {
         Conversation(SampleData.conversationSample)
     }
 }
+
 
 
 
