@@ -1,6 +1,7 @@
 package com.dongeul.composesample
 
 import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,32 +27,27 @@ import androidx.compose.ui.unit.dp
 import com.dongeul.composesample.ui.theme.ComposeSampleTheme
 
 @Composable
-fun OnboardingScreen() {
-    var shouldShowOnboarding by remember {
-        mutableStateOf(true)
-    }
-
-    Surface {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Welcome to the Basics Codelab")
-            Button(modifier = Modifier.padding(vertical = 24.dp),
-                onClick = {
-                    shouldShowOnboarding = false
-                }) {
-                Text(text = "Continue")
+fun OnboardingScreen(onContinueClicked : () ->Unit) {
+        Surface {
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Welcome to the Basics Codelab")
+                Button(modifier = Modifier.padding(vertical = 24.dp),
+                    onClick = {
+                        onContinueClicked.invoke()
+                    }) {
+                    Text(text = "Continue")
+                }
             }
         }
-    }
 }
 
-@Preview( showBackground =  true , widthDp = 320, heightDp = 320)
+@Preview(showBackground = true, widthDp = 320, heightDp = 320, uiMode = UI_MODE_NIGHT_YES)
+@Preview(showBackground = true, widthDp = 320, heightDp = 320)
 @Composable
-fun prevOnBoarding(){
-    MaterialTheme{
-        OnboardingScreen()
-    }
+fun prevOnBoarding() {
+        OnboardingScreen(onContinueClicked = {})
 }

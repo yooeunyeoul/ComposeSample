@@ -30,16 +30,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme() {
-                Column() {
-                    MyApp(names = listOf("개신기하네이거","니니니니니니"))
+            ComposeSampleTheme() {
+                Surface(color = MaterialTheme.colors.background) {
+                    MyApp()
                 }
 
             }
         }
     }
 }
-
 
 
 @Composable
@@ -104,12 +103,10 @@ fun MessageCard(msg: Message) {
     name = "Dark Mode"
 )
 
-@Preview
+@Preview(showBackground = true, name = "Text PreviewMessageCard")
 @Composable
 fun PreviewMessageCard() {
-    MaterialTheme() {
-        MessageCard(msg = Message("Colleage", "Hey Take a look"))
-    }
+    MessageCard(msg = Message("Colleage", "Hey Take a look"))
 }
 
 @Composable
